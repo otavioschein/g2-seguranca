@@ -1,5 +1,6 @@
 package br.faccat.g2seguranca.entity;
 
+import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,6 +19,8 @@ public class User {
     private Integer code;
     private String name;
     private String email;
+    private String telefone;
+    private String enderecoWeb;
     @Column(name = "professional_exp")
     private String professionalExperience;
 
