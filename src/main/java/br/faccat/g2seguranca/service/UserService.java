@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -27,7 +28,9 @@ public class UserService {
     }
 
     public User createUser(User user) {
-        return repository.save(user);
+        if (validateUser(user))
+            return repository.save(user);
+        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "User must not be null.");
     }
 
     public User updateUser(Integer id, User newUser) {
@@ -45,6 +48,15 @@ public class UserService {
         } catch (EmptyResultDataAccessException e) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
+    }
+
+    private boolean validateUser(User user) {
+        if(Objects.isNull(user.getName())
+                || Objects.isNull(user.getEmail())
+                || Objects.isNull(user.getProfessionalExperience())) {
+            return false;
+        }
+        return true;
     }
 
 }
