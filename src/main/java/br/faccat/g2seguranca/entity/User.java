@@ -1,6 +1,5 @@
 package br.faccat.g2seguranca.entity;
 
-import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

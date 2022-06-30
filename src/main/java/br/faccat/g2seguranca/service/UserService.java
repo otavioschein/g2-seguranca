@@ -35,11 +35,14 @@ public class UserService {
 
     public User updateUser(Integer id, User newUser) {
          Optional<User> actualUser = repository.findById(id);
-         if(actualUser.isPresent()) {
-             BeanUtils.copyProperties(newUser, actualUser.get(), "code");
-             return repository.save(actualUser.get());
+         if(validateUser(newUser)) {
+             if (actualUser.isPresent()) {
+                 BeanUtils.copyProperties(newUser, actualUser.get(), "code");
+                 return repository.save(actualUser.get());
+             }
+             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
          }
-         throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "User must not be null.");
     }
 
     public void deleteUser(Integer id) {
